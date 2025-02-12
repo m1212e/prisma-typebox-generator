@@ -1,6 +1,7 @@
 import { access, mkdir, rm } from "node:fs/promises";
 import { generatorHandler } from "@prisma/generator-helper";
 import { getConfig, setConfig } from "./config";
+import { processComposites } from "./generators/composite";
 import { processEnums } from "./generators/enum";
 import { processInclude } from "./generators/include";
 import { processOrderBy } from "./generators/orderBy";
@@ -38,6 +39,7 @@ generatorHandler({
     await mkdir(getConfig().output, { recursive: true });
 
     processEnums(options.dmmf.datamodel.enums);
+    processComposites(options.dmmf.datamodel.types);
     processPlain(options.dmmf.datamodel.models);
     processRelations(options.dmmf.datamodel.models);
     processWhere(options.dmmf.datamodel.models);

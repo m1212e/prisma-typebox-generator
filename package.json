@@ -22,6 +22,7 @@
   },
   "scripts": {
     "dev": "bun run build && bunx prisma generate",
+    "dev-mongo": "bun build.ts && bunx prisma generate --schema ./prisma/mongo-schema.prisma",
     "build": "bun run typecheck && bun build.ts",
     "lint": "biome check --write .",
     "typecheck": "tsc --noEmit"

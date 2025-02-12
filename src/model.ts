@@ -1,4 +1,5 @@
 import { getConfig } from "./config";
+import { processedComposites } from "./generators/composite";
 import { processedEnums } from "./generators/enum";
 import { processedInclude } from "./generators/include";
 import { processedOrderBy } from "./generators/orderBy";
@@ -60,6 +61,7 @@ export function mapAllModelsForWrite() {
   process(processedEnums, "");
   process(processedPlain, "Plain");
   process(processedRelations, "Relations");
+  process(processedComposites, "");
   process(processedPlainInputCreate, "PlainInputCreate");
   process(processedPlainInputUpdate, "PlainInputUpdate");
   process(processedRelationsInputCreate, "RelationsInputCreate");

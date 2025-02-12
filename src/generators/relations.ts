@@ -3,6 +3,7 @@ import { extractAnnotations } from "../annotations/annotations";
 import { generateTypeboxOptions } from "../annotations/options";
 import { getConfig } from "../config";
 import type { ProcessedModel } from "../model";
+import { processedComposites } from "./composite";
 import { processedEnums } from "./enum";
 import { processedPlain } from "./plain";
 import { isPrimitivePrismaFieldType } from "./primitiveField";
@@ -35,7 +36,8 @@ export function stringifyRelations(data: DMMF.Model) {
       if (
         annotations.isHidden ||
         isPrimitivePrismaFieldType(field.type) ||
-        processedEnums.find((e) => e.name === field.type)
+        processedEnums.find((e) => e.name === field.type) ||
+        processedComposites.find((c) => c.name === field.type)
       ) {
         return undefined;
       }
@@ -110,10 +112,10 @@ export function stringifyRelationsInputCreate(
 
       let typeboxIdType = "String";
 
-      switch (
-        allModels.find((m) => m.name === field.type)?.fields.find((f) => f.isId)
-          ?.type
-      ) {
+      const t = allModels
+        .find((m) => m.name === field.type)
+        ?.fields.find((f) => f.isId)?.type;
+      switch (t) {
         case "String":
           typeboxIdType = "String";
           break;
@@ -203,10 +205,10 @@ export function stringifyRelationsInputUpdate(
 
       let typeboxIdType = "String";
 
-      switch (
-        allModels.find((m) => m.name === field.type)?.fields.find((f) => f.isId)
-          ?.type
-      ) {
+      const t = allModels
+        .find((m) => m.name === field.type)
+        ?.fields.find((f) => f.isId)?.type;
+      switch (t) {
         case "String":
           typeboxIdType = "String";
           break;

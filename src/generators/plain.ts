@@ -6,6 +6,7 @@ import {
 import { generateTypeboxOptions } from "../annotations/options";
 import { getConfig } from "../config";
 import type { ProcessedModel } from "../model";
+import { processedComposites } from "./composite";
 import { processedEnums } from "./enum";
 import {
   type PrimitivePrismaFieldType,
@@ -112,6 +113,11 @@ export function stringifyPlain(
         // biome-ignore lint/style/noNonNullAssertion: we checked this manually
         stringifiedType = processedEnums.find(
           (e) => e.name === field.type
+        )!.stringRepresentation;
+      } else if (processedComposites.find((c) => c.name === field.type)) {
+        // biome-ignore lint/style/noNonNullAssertion: we checked this manually
+        stringifiedType = processedComposites.find(
+          (c) => c.name === field.type,
         )!.stringRepresentation;
       } else {
         return undefined;
